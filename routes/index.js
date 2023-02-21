@@ -10,9 +10,9 @@ router.get("/user", userController.getUsers);
 router.get("/user/:userId", userController.getUser);
 router.post("/user", userController.createUser);
 
-router.get("/items", clothingItemController.getClothingItem);
-router.post("/items", clothingItemsController.createClothingItem);
-router.delete("/items/:itemId", clothingItemsController.deleteClothingItem);
+router.get("/items", clothingItemController.getClothingItems);
+router.post("/items", clothingItemController.createClothingItem);
+router.delete("/items/:itemId", clothingItemController.deleteClothingItem);
 
 router.use((req, res) => {
   res.status(errors.NOT_FOUND).json({

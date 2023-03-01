@@ -9,6 +9,7 @@ exports.getClothingItems = (req, res) => {
 
 exports.createClothingItem = (req, res) => {
   const item = new ClothingItem({ ...req.body, owner: req.user._id });
+  item;
   item
     .save()
     .then(() => res.status(201).send(item))

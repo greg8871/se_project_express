@@ -12,18 +12,18 @@ router.get("/", (req, res) => {
 
 // Create a new
 router.post("/", (req, res) => {
-  const item = new ClothingItem(req.body);
+  const items = new ClothingItem(req.body);
   item.save((err) => {
     if (err) return errors.handleError(err, res);
-    return res.status(201).send(item);
+    return res.status(201).send(items);
   });
 });
 
 // Delete
 router.delete("/:itemId", (req, res) => {
-  ClothingItem.findByIdAndRemove(req.params.itemId, (err, item) => {
+  ClothingItem.findByIdAndRemove(req.params.itemId, (err, items) => {
     if (err) return errors.handleError(err, res);
-    if (!item)
+    if (!items)
       return res
         .status(errors.NOT_FOUND)
         .send({ message: "Requested resource not found" });

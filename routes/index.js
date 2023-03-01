@@ -6,9 +6,9 @@ const errors = require("../utils/errors");
 const clothingItemController = require("../controllers/clothingItem");
 const userController = require("../controllers/user");
 
-router.get("/user", userController.getUsers);
-router.get("/user/:userId", userController.getUser);
-router.post("/user", userController.createUser);
+router.get("/users", userController.getUsers);
+router.get("/users/:userId", userController.getUser);
+router.post("/users", userController.createUser);
 
 router.get("/items", clothingItemController.getClothingItems);
 router.post("/items", clothingItemController.createClothingItem);

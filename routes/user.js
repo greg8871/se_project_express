@@ -1,17 +1,33 @@
-const router = require("express").Router();
-const {
-  getUserById,
-  getCurrentUser,
-  updateUserData,
-} = require("../controllers/users");
-const { auth } = require("../middlewares/auth");
-const {
-  idValidation,
-  userUpdateValidation,
-} = require("../middlewares/validation");
+const express = require("express");
 
-router.get("/me", auth, getCurrentUser);
-router.get("/:userId", auth, idValidation, getUserById);
-router.patch("/me", auth, userUpdateValidation, updateUserData);
+const router = express.Router();
+const User = require("../models/user");
+const errors = require("../utils/errors");
+
+// Get all users
+router.get("/", (req, res) => {
+  User.find({})
+    .then((users) => res.json(users))
+    .catch((err) => errors.handleError(err, res));
+});
+
+//  specific user by id
+router.get("/:id", (req, res) => {
+  /* eslint-disable consistent-return */
+  User.findById(req.params.id)
+    .then((user) => {
+      if (!user)
+        return res.status(errors.NOT_FOUND).json({ message: "User not found" });
+      res.json(user);
+    })
+    .catch((err) => errors.handleError(err, res));
+});
+
+// Create a new user
+router.post("/", (req, res) => {
+  User.create(req.body)
+    .then((user) => res.status(201).json(user))
+    .catch((err) => errors.handleError(err, res));
+});
 
 module.exports = router;

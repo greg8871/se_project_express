@@ -22,8 +22,19 @@ exports.getUser = function (req, res) {
       res.send(user);
     });
 };
-
 exports.createUser = function (req, res) {
+  const user = new User(req.body);
+  user
+    .save()
+    .orFail(new Error("Failed to create user"))
+    .exec((err, userId) => {
+      if (err) {
+        return errors.handleError(err, res);
+      }
+      res.send(userId);
+    });
+
+  /* exports.createUser = function (req, res) {
   //const user = new User(req.body);
   User.create(req.body)
     .then((newUser) => {
@@ -31,7 +42,7 @@ exports.createUser = function (req, res) {
     })
     .catch((err) => {
       res.status(500).send(err);
-    });
+    }); */
   //.save()
   //.orFail(new Error("Failed to create user"))
   //.exec((err, userId) => {

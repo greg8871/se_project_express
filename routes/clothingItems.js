@@ -56,3 +56,4 @@ router.delete("/:itemId/likes", (req, res) => {
     }
   );
 });
+module.exports = router;

@@ -15,9 +15,7 @@ router.post("/items", clothingItemsController.createClothingItem);
 router.delete("/items/:itemId", clothingItemsController.deleteClothingItem);
 
 router.use((req, res) => {
-  res.status(errors.NOT_FOUND).json({
-    message: "Requested resource not found",
-  });
+  res.status(404).send({ message: "Requested resource not found" });
 });
 
 module.exports = router;

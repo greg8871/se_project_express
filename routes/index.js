@@ -3,16 +3,16 @@ const express = require("express");
 const router = express.Router();
 const errors = require("../utils/errors");
 
-const clothingItemController = require("../controllers/clothingItem");
-const userController = require("../controllers/user");
+const clothingItemsController = require("../controllers/clothingItems");
+const userController = require("../controllers/users");
 
 router.get("/users", userController.getUsers);
 router.get("/users/:userId", userController.getUser);
 router.post("/users", userController.createUser);
 
-router.get("/items", clothingItemController.getClothingItems);
-router.post("/items", clothingItemController.createClothingItem);
-router.delete("/items/:itemId", clothingItemController.deleteClothingItem);
+router.get("/items", clothingItemsController.getClothingItems);
+router.post("/items", clothingItemsController.createClothingItem);
+router.delete("/items/:itemId", clothingItemsController.deleteClothingItem);
 
 router.use((req, res) => {
   res.status(errors.NOT_FOUND).json({

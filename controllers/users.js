@@ -24,15 +24,13 @@ exports.getUser = function (req, res) {
 };
 exports.createUser = function (req, res) {
   const user = new User(req.body);
-  user
-    .save()
-    .findById(new Error("Failed to create user"))
-    .exec((err, userId) => {
-      if (err) {
-        return errors.handleError(err, res);
-      }
-      res.send(userId);
-    });
+  user.save();
+  User.findById(new Error("Failed to create user")).exec((err, userId) => {
+    if (err) {
+      return errors.handleError(err, res);
+    }
+    res.send(userId);
+  });
 
   /* exports.createUser = function (req, res) {
   //const user = new User(req.body);

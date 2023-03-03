@@ -13,7 +13,6 @@ router.get("/", (req, res) => {
 
 //  specific user by id
 router.get("/:id", (req, res) => {
-  /* eslint-disable consistent-return */
   User.findById(req.params.id)
     .then((user) => {
       if (!user)

@@ -23,14 +23,17 @@ exports.getUser = function (req, res) {
     });
 };
 exports.createUser = function (req, res) {
-  const user = new User(req.body);
-  user.save();
-  User.findById(new Error("Failed to create user")).exec((err, userId) => {
-    if (err) {
-      return errors.handleError(err, res);
-    }
-    res.send(userId);
-  });
+  /* const user = new User(req.body); */
+  User.create(req.body)
+    .then((items) => res.status(200).send(items))
+    .catch((err) => errors.handleError(err, res));
+
+  // User.findById(new Error("Failed to create user")).exec((err, userId) => {
+  //   if (err) {
+  //     return errors.handleError(err, res);
+  //   }
+  //   res.send(userId);
+  // });
 
   /* exports.createUser = function (req, res) {
   //const user = new User(req.body);

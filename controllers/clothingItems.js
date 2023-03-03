@@ -25,7 +25,7 @@ exports.deleteClothingItem = (req, res) => {
       res.status(errors.NOT_FOUND).send({ message: "Resource not found" })
     )
     .then((item) =>
-      res.status(200).send({ message: `${item} Successfully deleted` })
+      res.status(204).send({ message: `${item} Successfully deleted` })
     )
     .catch((error) => errors.handleError(error, res));
 };

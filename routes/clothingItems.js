@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", clothingItemsController.getClothingItems);
 
 // Create a new
-router.post("/", clothingItemsController.getClothingItems);
+router.post("/", clothingItemsController.createClothingItem);
 /* router.post("/", (req, res) => {
   const item = new ClothingItem(req.body);
   item.save((err) => {
@@ -17,7 +17,7 @@ router.post("/", clothingItemsController.getClothingItems);
 }); */
 
 // Delete
-router.delete(":itemId", clothingItemsController.getClothingItems);
+router.delete(":itemId", clothingItemsController.deleteClothingItem);
 /* router.delete("/:itemId", (req, res) => {
   ClothingItem.findByIdAndRemove(req.params.itemId, (err, item) => {
     if (err) return errors.handleError(err, res);
@@ -30,7 +30,7 @@ router.delete(":itemId", clothingItemsController.getClothingItems);
 }); */
 
 // like
-router.put("/:itemId/likes", clothingItemsController.getClothingItems);
+router.put("/:itemId/likes", clothingItemsController.likeItem);
 /* router.put("/:itemId/likes", (req, res) => {
   ClothingItem.findByIdAndUpdate(
     req.params.itemId,
@@ -44,7 +44,7 @@ router.put("/:itemId/likes", clothingItemsController.getClothingItems);
 }); */
 
 // unlike
-router.delete("/:itemId/likes", clothingItemsController.getClothingItems);
+router.delete("/:itemId/likes", clothingItemsController.dislikeItem);
 /* router.delete("/:itemId/likes", (req, res) => {
   ClothingItem.findByIdAndUpdate(
     req.params.itemId,

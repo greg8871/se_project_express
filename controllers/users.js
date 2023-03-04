@@ -12,44 +12,23 @@ exports.getUsers = function (req, res) {
     });
 };
 
-exports.getUser = function (req, res) {
-  User.findById(req.params.userId)
-    .orFail(new Error("User not found"))
-    .exec((err, user) => {
-      if (err) {
-        return errors.handleError(err, res);
-      }
+exports.getUser = async function (req, res) {
+  try {
+    const user = await User.findById(req.params.userId);
+
+    if (user) {
       res.send(user);
-    });
+    } else {
+      const err = new Error("User not found");
+      err.name = "NotFound";
+      errors.handleError(err, res);
+    }
+  } catch (err) {
+    return errors.handleError(err, res);
+  }
 };
 exports.createUser = function (req, res) {
-  /* const user = new User(req.body); */
   User.create(req.body)
     .then((items) => res.status(200).send(items))
     .catch((err) => errors.handleError(err, res));
-
-  // User.findById(new Error("Failed to create user")).exec((err, userId) => {
-  //   if (err) {
-  //     return errors.handleError(err, res);
-  //   }
-  //   res.send(userId);
-  // });
-
-  /* exports.createUser = function (req, res) {
-  //const user = new User(req.body);
-  User.create(req.body)
-    .then((newUser) => {
-      res.send(newUser);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    }); */
-  //.save()
-  //.orFail(new Error("Failed to create user"))
-  //.exec((err, userId) => {
-  //  if (err) {
-  //    return errors.handleError(err, res);
-  //  }
-  //  res.send(userId);
-  //});
 };

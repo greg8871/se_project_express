@@ -17,7 +17,7 @@ router.post("/", clothingItemsController.getClothingItems);
 }); */
 
 // Delete
-router.delete("/", clothingItemsController.getClothingItems);
+router.delete(":itemId", clothingItemsController.getClothingItems);
 /* router.delete("/:itemId", (req, res) => {
   ClothingItem.findByIdAndRemove(req.params.itemId, (err, item) => {
     if (err) return errors.handleError(err, res);
@@ -30,7 +30,7 @@ router.delete("/", clothingItemsController.getClothingItems);
 }); */
 
 // like
-router.ut("/", clothingItemsController.getClothingItems);
+router.put("/:itemId/likes", clothingItemsController.getClothingItems);
 /* router.put("/:itemId/likes", (req, res) => {
   ClothingItem.findByIdAndUpdate(
     req.params.itemId,
@@ -44,7 +44,7 @@ router.ut("/", clothingItemsController.getClothingItems);
 }); */
 
 // unlike
-router.delete("/", clothingItemsController.getClothingItems);
+router.delete("/:itemId/likes", clothingItemsController.getClothingItems);
 /* router.delete("/:itemId/likes", (req, res) => {
   ClothingItem.findByIdAndUpdate(
     req.params.itemId,

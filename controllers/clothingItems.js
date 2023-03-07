@@ -30,22 +30,51 @@ exports.deleteClothingItem = (req, res) => {
     .catch((error) => errors.handleError(error, res));
 };
 
-exports.likeItem = (req, res) => {
-  ClothingItem.findByIdAndUpdate(
-    req.params.itemId,
-    { $addToSet: { likes: req.user._id } },
-    { new: true }
-  )
-    .then((item) => res.status(200).send(item))
-    .catch((error) => errors.handleError(error, res));
-};
+exports.likeItem = async (req, res) => {
+  try {
+    const item = await ClothingItem.findById(req.params.itemId);
 
-exports.dislikeItem = (req, res) => {
+    if (item) {
+      const result = await ClothingItem.findByIdAndUpdate(
+        req.params.itemId,
+        { $addToSet: { likes: req.user._id } },
+        { new: true }
+      );
+      res.status(200).send(result);
+    } else {
+      const err = new Error("Item not found");
+      err.name = "NotFound";
+      errors.handleError(err, res);
+    }
+  } catch (err) {
+    errors.handleError(err, res);
+  }
+};
+exports.dislikeItem = async (req, res) => {
+  try {
+    const item = await ClothingItem.findById(req.params.itemId);
+
+    if (item) {
+      const result = await ClothingItem.findByIdAndUpdate(
+        req.params.itemId,
+        { $pull: { likes: req.user._id } },
+        { new: true }
+      );
+      res.status(200).send(result);
+    } else {
+      const err = new Error("Item not found");
+      err.name = "NotFound";
+      errors.handleError(err, res);
+    }
+  } catch (err) {
+    errors.handleError(err, res);
+  }
+  /* exports.dislikeItem = (req, res) => {
   ClothingItem.findByIdAndUpdate(
     req.params.itemId,
     { $pull: { likes: req.user._id } },
     { new: true }
   )
     .then((item) => res.status(200).send(item))
-    .catch((error) => errors.handleError(error, res));
+    .catch((error) => errors.handleError(error, res));*/
 };

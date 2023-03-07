@@ -15,8 +15,24 @@ exports.createClothingItem = (req, res) => {
     .then(() => res.status(201).send(item))
     .catch((error) => errors.handleError(error, res));
 };
+exports.deleteClothingItem = async (req, res) => {
+  try {
+    const item = await ClothingItem.findById(req.params.itemId);
 
-exports.deleteClothingItem = (req, res) => {
+    if (item) {
+      const result = await ClothingItem.findByIdAndRemove({
+        _id: req.params.itemId,
+        owner: req.user._id,
+      });
+      res.status(200).send(result);
+    } else {
+      res.status(errors.NOT_FOUND).send({ message: "Resource not found" });
+    }
+  } catch (err) {
+    errors.handleError(err, res);
+  }
+};
+/* exports.deleteClothingItem = (req, res) => {
   ClothingItem.findOneAndRemove({
     _id: req.params.itemId,
     owner: req.user._id,
@@ -28,7 +44,7 @@ exports.deleteClothingItem = (req, res) => {
       res.status(204).send({ message: `${item} Successfully deleted` })
     )
     .catch((error) => errors.handleError(error, res));
-};
+}; */
 
 exports.likeItem = async (req, res) => {
   try {

@@ -13,8 +13,8 @@ exports.handleError = (err, res) => {
     case "CastError":
       return res.status(exports.BAD_REQUEST).send({ message: err.message });
 
-    case "MongoError":
-      return res.status(exports.BAD_REQUEST).send({ message: err.message });
+    /*  case "MongoError": */
+    /* return res.status(exports.BAD_REQUEST).send({ message: err.message }); */
     default:
       return res
         .status(exports.INTERNAL_SERVER_ERROR)

@@ -9,7 +9,7 @@ exports.getClothingItems = (req, res) => {
 
 exports.createClothingItem = (req, res) => {
   const item = new ClothingItem({ ...req.body, owner: req.user._id });
-  item;
+  /*  item; */
   item
     .save()
     .then(() => res.status(201).send(item))
@@ -32,19 +32,6 @@ exports.deleteClothingItem = async (req, res) => {
     errors.handleError(err, res);
   }
 };
-/* exports.deleteClothingItem = (req, res) => {
-  ClothingItem.findOneAndRemove({
-    _id: req.params.itemId,
-    owner: req.user._id,
-  })
-    .orFail(() =>
-      res.status(errors.NOT_FOUND).send({ message: "Resource not found" })
-    )
-    .then((item) =>
-      res.status(204).send({ message: `${item} Successfully deleted` })
-    )
-    .catch((error) => errors.handleError(error, res));
-}; */
 
 exports.likeItem = async (req, res) => {
   try {
@@ -60,7 +47,7 @@ exports.likeItem = async (req, res) => {
     } else {
       const err = new Error("Item not found");
       err.name = "NotFound";
-      errors.handleError(err, res);
+      throw err;
     }
   } catch (err) {
     errors.handleError(err, res);
@@ -80,17 +67,9 @@ exports.dislikeItem = async (req, res) => {
     } else {
       const err = new Error("Item not found");
       err.name = "NotFound";
-      errors.handleError(err, res);
+      throw err;
     }
   } catch (err) {
     errors.handleError(err, res);
   }
-  /* exports.dislikeItem = (req, res) => {
-  ClothingItem.findByIdAndUpdate(
-    req.params.itemId,
-    { $pull: { likes: req.user._id } },
-    { new: true }
-  )
-    .then((item) => res.status(200).send(item))
-    .catch((error) => errors.handleError(error, res));*/
 };

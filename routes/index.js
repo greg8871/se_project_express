@@ -2,14 +2,10 @@ const express = require("express");
 
 const router = express.Router();
 const clothingItemsRouter = require("./clothingItems");
-const errors = require("../utils/errors");
+/* const errors = require("../utils/errors"); */
 
 const clothingItemsController = require("../controllers/clothingItems");
-const userController = require("../controllers/users");
-
-router.get("/users", userController.getUsers);
-router.get("/users/:userId", userController.getUser);
-router.post("/users", userController.createUser);
+/* const userController = require("../controllers/users"); */
 
 router.get("/items", clothingItemsController.getClothingItems);
 router.post("/items", clothingItemsController.createClothingItem);

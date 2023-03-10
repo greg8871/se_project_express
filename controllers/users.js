@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const errors = require("../utils/errors");
 
-exports.getUsers = function (res) {
+exports.getUsers = function (req, res) {
   User.find({})
     .then((users) => res.send(users))
     .catch((err) => errors.handleError(err, res));
@@ -22,7 +22,12 @@ exports.getUser = async function (req, res) {
   }
 };
 exports.createUser = function (req, res) {
-  User.create(req.body.name, req.body.avatar)
+  User.create({ name: req.body.name, avatar: req.body.avatar })
     .then((items) => res.status(200).send(items))
+    .catch((err) => errors.handleError(err, res));
+};
+exports.getAllUsers = function (req, res) {
+  User.find({})
+    .then((users) => res.json(users))
     .catch((err) => errors.handleError(err, res));
 };

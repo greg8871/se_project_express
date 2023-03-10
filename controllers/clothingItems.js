@@ -17,17 +17,14 @@ exports.createClothingItem = (req, res) => {
 };
 exports.deleteClothingItem = async (req, res) => {
   try {
-    const item = await ClothingItem.findById(req.params.itemId);
+    /* const item = await ClothingItem.findById(req.params.itemId); */
 
-    if (item) {
-      const result = await ClothingItem.findByIdAndRemove({
-        _id: req.params.itemId,
-        owner: req.user._id,
-      });
-      res.status(200).send(result);
-    } else {
-      res.status(errors.NOT_FOUND).send({ message: "Resource not found" });
-    }
+    /* if (item) { */
+    const result = await ClothingItem.findByIdAndRemove({
+      _id: req.params.itemId,
+      owner: req.user._id,
+    });
+    res.status(200).send(result);
   } catch (err) {
     errors.handleError(err, res);
   }

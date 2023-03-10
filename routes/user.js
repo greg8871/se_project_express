@@ -5,15 +5,11 @@ const router = express.Router();
 const User = require("../models/user");
 const errors = require("../utils/errors");
 
-router.get("/users", userController.getUsers);
-router.get("/users/:userId", userController.getUser);
-router.post("/users", userController.createUser);
+router.get("/", userController.getUsers);
+router.get("/:userId", userController.getUser);
+router.post("/", userController.createUser);
 // Get all users
-router.get("/", (req, res) => {
-  User.find({})
-    .then((users) => res.json(users))
-    .catch((err) => errors.handleError(err, res));
-});
+router.get("/", userController.getAllUsers);
 
 //  specific user by id
 router.get("/:id", (req, res) => {

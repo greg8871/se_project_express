@@ -8,7 +8,7 @@ router.get("/", clothingItemsController.getClothingItems);
 
 router.post("/", clothingItemsController.createClothingItem);
 
-router.delete(":itemId", clothingItemsController.deleteClothingItem);
+router.delete("/:itemId", clothingItemsController.deleteClothingItem);
 
 router.put("/:itemId/likes", clothingItemsController.likeItem);
 

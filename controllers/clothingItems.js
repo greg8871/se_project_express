@@ -70,3 +70,20 @@ exports.dislikeItem = async (req, res) => {
     errors.handleError(err, res);
   }
 };
+exports.deleteItem = (req, res) => {
+  const { itemId } = req.params;
+
+  ClothingItem.findByIdAndRemove(itemId)
+    .orFail(() => {
+      handleOnFailError();
+    })
+    .then((item) => {
+      if (item.owner.equals(req.user._id)) {
+        return item.remove(() => res.send({ clothingItem: item }));
+      }
+      return res.status(403).send({ message: "You do not have permission" });
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+};

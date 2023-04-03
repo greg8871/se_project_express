@@ -1,4 +1,4 @@
-const express = require("express");
+/* const express = require("express");
 
 const router = express.Router();
 const clothingItemsRouter = require("./clothingItems");
@@ -12,4 +12,4 @@ router.use((req, res) => {
   res.status(404).send({ message: ErrorMessageNotFound });
 });
 
-module.exports = router;
+module.exports = router; */

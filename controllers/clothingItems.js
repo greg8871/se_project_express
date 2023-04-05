@@ -9,7 +9,7 @@ const ClothingItem = require("../models/clothingItem");
 exports.getClothingItems = (req, res) => {
   ClothingItem.find()
     .then((items) => res.status(200).send(items))
-    .catch((error) => errors.handleError(error, res));
+    .catch((error) => handleError(error, res));
 };
 
 exports.createClothingItem = (req, res) => {
@@ -18,7 +18,7 @@ exports.createClothingItem = (req, res) => {
   item
     .save()
     .then(() => res.status(201).send(item))
-    .catch((error) => errors.handleError(error, res));
+    .catch((error) => handleError(error, res));
 };
 /* exports.deleteClothingItem = async (req, res) => {
   try {
@@ -51,8 +51,8 @@ exports.likeItem = async (req, res) => {
       err.name = "NotFound";
       throw err;
     }
-  } catch (err) {
-    errors.handleError(err, res);
+  } catch (error) {
+    errors.handleError(error, res);
   }
 };
 exports.dislikeItem = async (req, res) => {
@@ -74,8 +74,8 @@ exports.dislikeItem = async (req, res) => {
       err.name = "NotFound";
       throw err;
     }
-  } catch (err) {
-    errors.handleError(err, res);
+  } catch (error) {
+    errors.handleError(error, res);
   }
 };
 exports.deleteItem = (req, res) => {
@@ -93,7 +93,7 @@ exports.deleteItem = (req, res) => {
         .status(FORRBIDEN)
         .send({ message: "You do not have permission" });
     })
-    .catch((err) => {
-      handleError(err, res);
+    .catch((error) => {
+      handleError(error, res);
     });
 };

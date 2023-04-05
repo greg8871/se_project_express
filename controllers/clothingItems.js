@@ -1,4 +1,9 @@
-const errors = require("../utils/errors");
+const {
+  errors,
+  handleOnFailError,
+  handleError,
+  FORRBIDEN,
+} = require("../utils/errors");
 const ClothingItem = require("../models/clothingItem");
 
 exports.getClothingItems = (req, res) => {
@@ -15,7 +20,7 @@ exports.createClothingItem = (req, res) => {
     .then(() => res.status(201).send(item))
     .catch((error) => errors.handleError(error, res));
 };
-exports.deleteClothingItem = async (req, res) => {
+/* exports.deleteClothingItem = async (req, res) => {
   try {
     const item = await ClothingItem.findById(req.params.itemId);
 
@@ -28,7 +33,7 @@ exports.deleteClothingItem = async (req, res) => {
   } catch (err) {
     errors.handleError(err, res);
   }
-};
+}; */
 
 exports.likeItem = async (req, res) => {
   try {
@@ -59,7 +64,10 @@ exports.dislikeItem = async (req, res) => {
         req.params.itemId,
         { $pull: { likes: req.user._id } },
         { new: true }
-      );
+      ).orFail(() => {
+        handleOnFailError();
+      });
+
       res.status(200).send(result);
     } else {
       const err = new Error("Item not found");
@@ -81,7 +89,9 @@ exports.deleteItem = (req, res) => {
       if (item.owner.equals(req.user._id)) {
         return item.remove(() => res.send({ clothingItem: item }));
       }
-      return res.status(403).send({ message: "You do not have permission" });
+      return res
+        .status(FORRBIDEN)
+        .send({ message: "You do not have permission" });
     })
     .catch((err) => {
       handleError(err, res);

@@ -6,6 +6,11 @@ exports.ALREADYEXITSERROR = 409;
 exports.INTERNAL_SERVER_ERROR = 500;
 
 // handleError function to return appropriate status code for different errors
+const handleOnFailError = () => {
+  const error = new Error("Requested resource not found");
+  error.statusCode = 404;
+  throw error;
+};
 exports.handleError = (err, res) => {
   switch (err.name) {
     case "NotFound":
@@ -34,3 +39,4 @@ exports.handleError = (err, res) => {
         .send({ message: "An error has occurred on the server." });
   }
 };
+module.exports = { handleOnFailError };

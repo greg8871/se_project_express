@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const { createUser, login } = require("./controllers/users");
 const clothingItems = require("./routes/clothingItems");
 const users = require("./routes/user");
+
 const { PORT = 3001 } = process.env;
 
 const app = express();

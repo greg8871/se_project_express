@@ -81,7 +81,7 @@ exports.dislikeItem = async (req, res) => {
 exports.deleteItem = (req, res) => {
   const { itemId } = req.params;
 
-  ClothingItem.findByIdAndRemove(itemId)
+  ClothingItem.findById(itemId)
     .orFail(() => {
       handleOnFailError();
     })

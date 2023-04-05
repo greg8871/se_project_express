@@ -9,32 +9,36 @@ const { handleOnFailError, handleError } = require("../utils/errors");
 const createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
 
-  User.findOne({ email }).then((user, err) => {
-    if (err) {
+  User.findOne({ email })
+    .then((user) => {
+      /* if (err) {
       return res.status(500).send({ message: "A server error has occured" });
-    }
+    } */
 
-    if (user) {
-      const error = new Error("User with this email already exists");
-      error.name = "AlreadyExistsError";
-      throw error;
-    }
-    return bcrypt.hash(password, 10).then((hash) => {
-      User.create({ name, avatar, email, password: hash })
-        .then((item) =>
-          res /* setHeader("Content-Type", "application/json") */
-            .status(201)
-            .send({
-              name: item.name,
-              avatar: item.avatar,
-              email: item.email,
-            })
-        )
-        .catch((err2) => {
-          handleError(err2, res);
-        });
+      if (user) {
+        const error = new Error("User with this email already exists");
+        error.name = "AlreadyExistsError";
+        throw error;
+      }
+      return bcrypt.hash(password, 10).then((hash) => {
+        User.create({ name, avatar, email, password: hash })
+          .then((item) =>
+            res /* setHeader("Content-Type", "application/json") */
+              .status(201)
+              .send({
+                name: item.name,
+                avatar: item.avatar,
+                email: item.email,
+              })
+          )
+          .catch((err2) => {
+            handleError(err2, res);
+          });
+      });
+    })
+    .catch((err) => {
+      handleError(err, res);
     });
-  });
 };
 
 const getCurrentUser = async (req, res, next, ERROR_CODES) => {
@@ -55,10 +59,10 @@ const getCurrentUser = async (req, res, next, ERROR_CODES) => {
 };
 
 const updateUser = (req, res) => {
-  const { name, avatar, _id } = req.body;
+  const { name, avatar } = req.body;
 
   User.findByIdAndUpdate(
-    { _id },
+    { _id: req.user._id },
     { name, avatar },
     { new: true, runValidators: true }
   )
@@ -80,7 +84,10 @@ const login = (req, res) => {
         }),
       });
     })
-    .catch((err) => {
+    .catch(() => {
+      const err = new Error();
+      err.name = "Unauthorized";
+
       handleError(err, res);
     });
 };

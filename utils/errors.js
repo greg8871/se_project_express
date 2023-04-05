@@ -9,6 +9,7 @@ exports.INTERNAL_SERVER_ERROR = 500;
 const handleOnFailError = () => {
   const error = new Error("Requested resource not found");
   error.statusCode = 404;
+  error.name = "NotFound";
   throw error;
 };
 exports.handleError = (err, res) => {

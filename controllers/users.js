@@ -41,20 +41,14 @@ const createUser = (req, res) => {
     });
 };
 
-const getCurrentUser = async (req, res, next, ERROR_CODES) => {
+const getCurrentUser = async (req, res) => {
   User.findById(req.user._id)
+    .orFail(handleOnFailError)
     .then((user) => {
-      if (!user) {
-        res.status(ERROR_CODES.NotFound).send({ message: "User not found" });
-      }
-      res.status(ERROR_CODES.Ok).send(user);
+      res.status(200).send(user);
     })
-    .catch((error) => {
-      if (error.name === "CastError") {
-        res.status(ERROR_CODES.NotFound).send({ message: "User not found" });
-      } else {
-        next(error);
-      }
+    .catch((err) => {
+      handleError(err, res);
     });
 };
 

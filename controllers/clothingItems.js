@@ -1,5 +1,4 @@
 const {
-  errors,
   handleOnFailError,
   handleError,
   FORRBIDEN,
@@ -52,7 +51,7 @@ exports.likeItem = async (req, res) => {
       throw err;
     }
   } catch (error) {
-    errors.handleError(error, res);
+    handleError(error, res);
   }
 };
 exports.dislikeItem = async (req, res) => {
@@ -75,7 +74,7 @@ exports.dislikeItem = async (req, res) => {
       throw err;
     }
   } catch (error) {
-    errors.handleError(error, res);
+    handleError(error, res);
   }
 };
 exports.deleteItem = (req, res) => {

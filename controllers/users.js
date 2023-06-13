@@ -69,6 +69,7 @@ const updateUser = (req, res) => {
 
 const login = (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
 
   User.findUserByCredentials(email, password)
     .then((user) => {

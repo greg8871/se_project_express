@@ -6,16 +6,26 @@ const { createUser, login } = require("./controllers/users");
 const clothingItems = require("./routes/clothingItems");
 const users = require("./routes/user");
 const { NOT_FOUND } = require("./utils/errors");
+const cors = require("cors");
 
 const { PORT = 3001 } = process.env;
 
 const app = express();
+app.use(cors());
 mongoose.connect("mongodb://127.0.0.1:27017/wtwr_db");
 
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.post("/signin", login);
+//app.use(bodyParser.urlencoded({ extended: true }));
+app.post("/test", (req, res, next) => {
+  console.log("Got a test request!");
+  res.status(200).send("");
+});
+//app.post("/signin", login);
+app.post("/signin", (req, res, next) => {
+  console.log("Got a test request!");
+  res.status(200).send("response!");
+});
 app.post("/signup", createUser);
 app.use("/items", clothingItems);
 app.use("/users", users);

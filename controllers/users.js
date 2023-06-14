@@ -67,23 +67,25 @@ const updateUser = (req, res) => {
     });
 };
 
-const login = (req, res) => {
+ const login = (req, res, next) => {
+  console.log("help me")
   const { email, password } = req.body;
   console.log(email, password);
 
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       res.send({
         token: jwt.sign({ _id: user._id }, JWT_SECRET, {
           expiresIn: "7d",
         }),
       });
-    })
-    .catch(() => {
+    }) 
+    .catch((error) => {
       const err = new Error();
+      console.error(error)
       err.name = "Unauthorized";
 
-      handleError(err, res);
+      handleError(err, res); 
     });
 };
 

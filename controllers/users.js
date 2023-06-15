@@ -6,20 +6,16 @@ const { JWT_SECRET } = require("../utils/config");
 
 const { handleOnFailError, handleError } = require("../utils/errors");
 
-const createUser = (req, res) => {
+const createUser = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
 
   User.findOne({ email })
     .then((user) => {
-      /* if (err) {
-      return res.status(500).send({ message: "A server error has occured" });
-    } */
-
       if (user) {
         const error = new Error("User with this email already exists");
-        error.name = "AlreadyExistsError";
-        throw error;
+        return next(error);
       }
+
       return bcrypt.hash(password, 10).then((hash) => {
         User.create({ name, avatar, email, password: hash })
           .then((item) =>
@@ -67,10 +63,10 @@ const updateUser = (req, res) => {
     });
 };
 
- const login = (req, res, next) => {
-  console.log("help me")
+const login = (req, res,) => {
+  
   const { email, password } = req.body;
-  console.log(email, password);
+ 
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -79,14 +75,14 @@ const updateUser = (req, res) => {
           expiresIn: "7d",
         }),
       });
-    }) 
+    })
     .catch((error) => {
-      const err = new Error();
-      console.error(error)
-      err.name = "Unauthorized";
+      // const err = new Error();
+      
+      // err.name = "Unauthorized";
 
-      handleError(err, res); 
+      handleError(error, res);
     });
 };
 
-module.exports = { createUser, getCurrentUser, updateUser, login };
+module.exports = { createUser, getCurrentUser, updateUser, login,};

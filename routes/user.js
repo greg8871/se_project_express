@@ -14,4 +14,4 @@ const {
   
   router.get("/:userId", getUser);
   
-  module.exports = router;
+  module.exports = router, handleAuthenticationError ;

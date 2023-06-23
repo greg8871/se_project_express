@@ -17,10 +17,22 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    handleAuthenticationError(res);
+    if (err.name === "JsonWebTokenError") {
+      return res.status(401).send({ message: "Invalid token" });
+    }
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).send({ message: "Token expired" });
+    }
+    return res.status(FORBIDDEN_ERROR.error).send({ message: "Bad request" });
   }
 
   req.user = payload;
 
-  return next();
+  next();
+
+  return null;
+};
+
+module.exports = {
+  handleAuthenticationError,
 };

@@ -15,4 +15,4 @@ router.post("/signin", login);
     res.status(NOT_FOUND.error).send({ message: "Router not found" });
 });
 
-module.exports = router;
+module.exports = router, handleAuthenticationError;

@@ -5,14 +5,14 @@ const { NOT_FOUND } = require("../utils/errors");
 const { createUser, login } = require("../controllers/users");
 const auth = require("../middlewares/auth");
 
+router.use(auth);
 router.use("/items", clothingItem);
-router.use("/user", auth.handleAuthenticationError, user);
+router.use("/users", user);
 router.post("/signup", createUser);
 router.post("/signin", login);
 
-
-  router.use((req, res) => {
-    res.status(NOT_FOUND.error).send({ message: "Router not found" });
+router.use((req, res) => {
+  res.status(NOT_FOUND).send({ message: "Router not found" });
 });
 
-module.exports = router, handleAuthenticationError;
+module.exports = router;

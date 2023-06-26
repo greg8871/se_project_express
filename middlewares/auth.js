@@ -5,7 +5,8 @@ const { UNAUTHORIZED } = require("../utils/errors");
 const handleAuthenticationError = (res) =>
   res.status(UNAUTHORIZED).send({ message: "Authorization required" });
 
-module.exports = (req, res, next) => {
+module.exports =
+ (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith("Bearer")) {
@@ -33,6 +34,3 @@ module.exports = (req, res, next) => {
   return null;
 };
 
-module.exports = {
-  handleAuthenticationError,
-};

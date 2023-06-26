@@ -19,21 +19,6 @@ exports.createClothingItem = (req, res) => {
     .then(() => res.status(201).send(item))
     .catch((error) => handleError(error, res));
 };
-/* exports.deleteClothingItem = async (req, res) => {
-  try {
-    const item = await ClothingItem.findById(req.params.itemId);
-
-    if (item) {
-      const result = await ClothingItem.findByIdAndRemove(req.params.itemId);
-      res.status(200).send(result);
-    } else {
-      res.status(errors.NOT_FOUND).send({ message: "Recource not found" });
-    }
-  } catch (err) {
-    errors.handleError(err, res);
-  }
-}; */
-
 exports.likeItem = async (req, res) => {
   try {
     const item = await ClothingItem.findById(req.params.itemId);

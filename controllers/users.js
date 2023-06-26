@@ -112,7 +112,7 @@ const updateUser = (req, res) => {
 };
 
 const getCurrentUser = (req, res) => {
-  const { _id: userId } = req.user;
+  const { _id: userId } = req.user._Id;
 
   User.findById(userId)
     .then((user) => {

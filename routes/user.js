@@ -6,12 +6,13 @@ const {
     getUsers,
     getUser,
   } = require("../controllers/users");
-  router.get("/me", auth.handleAuthenticationError, getCurrentUser);
 
-  router.patch("/me", auth.handleAuthenticationError, updateUser);
+  router.get("/me", auth, getCurrentUser);
+
+  router.patch("/me", auth, updateUser);
   
-  router.get("/", getUsers);
+  router.get("/", auth, getUsers);
   
-  router.get("/:userId", getUser);
+  router.get("/:userId", auth, getUser);
   
-  module.exports = router, handleAuthenticationError ;
+  module.exports = router;

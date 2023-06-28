@@ -36,7 +36,7 @@ const createUser = (req, res) => {
           .send({ message: "Email already exists in database" });
       } else {
         res
-          .status(DEFAULT_ERROR.error)
+          .status(INTERNAL_SERVER_ERROR.error) // define what is SEFAULT_ERROR
           .send({ message: "An error has occurred on the server" });
       }
     });
@@ -62,11 +62,12 @@ const login = (req, res) => {
       });
     })
     .catch((err) => {
+      console.error(err)
       if (err.statusCode === 401) {
         res.status(401).send({ message: "Email or Password not found" });
       } else {
         res
-          .status(DEFAULT_ERROR.error)
+          .status(INTERNAL_SERVER_ERROR)
           .send({ message: "Internal server error" });
       }
     });
@@ -106,13 +107,13 @@ const updateUser = (req, res) => {
       }
 
       res
-        .status(DEFAULT_ERROR.error)
+        .status(INTERNAL_SERVER_ERROR.error)
         .send({ message: "An error has occurred on the server" });
     });
 };
 
 const getCurrentUser = (req, res) => {
-  const { _id: userId } = req.user._Id;
+  const { _id: userId } = req.user._id;
 
   User.findById(userId)
     .then((user) => {
@@ -155,7 +156,7 @@ const getUser = (req, res) => {
           .send({ message: "Invalid user ID" });
       } else {
         res
-          .status(DEFAULT_ERROR.error)
+          .status(INTERNAL_SERVER_ERROR.error)
           .send({ message: "An error has occured on the server" });
       }
     });

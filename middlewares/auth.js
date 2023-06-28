@@ -11,6 +11,7 @@ module.exports =
 
   if (!authorization || !authorization.startsWith("Bearer")) {
     handleAuthenticationError(res);
+    return 
   }
   const token = authorization.replace("Bearer ", "");
   let payload;

@@ -5,9 +5,9 @@ const { NOT_FOUND } = require("../utils/errors");
 const { createUser, login } = require("../controllers/users");
 const auth = require("../middlewares/auth");
 
-router.use(auth);
-router.use("/items", clothingItem);
-router.use("/users", user);
+
+router.use("/items", auth, clothingItem);
+router.use("/users", auth, user);
 router.post("/signup", createUser);
 router.post("/signin", login);
 

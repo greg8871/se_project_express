@@ -18,7 +18,7 @@ const createUser = (req, res) => {
       .status(ALREADYEXITSERROR.error)
       .send({ message: "Password is required" });
   }
-
+  console.log(password);
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({ name, avatar, email, password: hash }))
@@ -44,7 +44,7 @@ const createUser = (req, res) => {
 
 const login = (req, res) => {
   const { email, password } = req.body;
-
+  console.log(email, password);
   User.findUserByCredentials(email, password)
     .then((user) => {
       if (!user) {
@@ -62,7 +62,7 @@ const login = (req, res) => {
       });
     })
     .catch((err) => {
-      console.error(err)
+      console.error(err);
       if (err.statusCode === 401) {
         res.status(401).send({ message: "Email or Password not found" });
       } else {

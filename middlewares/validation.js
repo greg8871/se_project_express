@@ -8,7 +8,7 @@ const validateURL = (value, helpers) => {
   return helpers.error("string.uri");
 };
 
-// validate clothing item body when item is created
+
 module.exports.validateCardBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30)
@@ -27,7 +27,7 @@ module.exports.validateCardBody = celebrate({
   }),
 });
 
-// validate user info body when user is updated
+
 module.exports.validateUserUpdate = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30)
@@ -43,7 +43,7 @@ module.exports.validateUserUpdate = celebrate({
   }),
 });
 
-// validate user info body when user is created
+
 module.exports.validateUserBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30)
@@ -66,7 +66,7 @@ module.exports.validateUserBody = celebrate({
   }),
 });
 
-// authenticate when user logs in
+
 module.exports.validateUserLogin = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email().messages({
@@ -79,7 +79,7 @@ module.exports.validateUserLogin = celebrate({
   }),
 });
 
-// user and clothing items IDs when they are accessed
+
 module.exports.validateIds = celebrate({
   params: Joi.object().keys({
     itemId: Joi.string().length(24).hex().required(),

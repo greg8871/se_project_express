@@ -1,37 +1,25 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../utils/config");
-const { UNAUTHORIZED } = require("../utils/errors");
+const UnauthorizedError = require("../errors/unauthorized");
 
-const handleAuthenticationError = (res) =>
-  res.status(UNAUTHORIZED).send({ message: "Authorization required" });
+const { NODE_ENV, JWT_SECRET } = process.env;
 
-module.exports =
- (req, res, next) => {
+module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization || !authorization.startsWith("Bearer")) {
-    handleAuthenticationError(res);
-    return 
+  if (!authorization || !authorization.startsWith("Bearer ")) {
+    throw new UnauthorizedError("Unauthorized");
   }
+
   const token = authorization.replace("Bearer ", "");
   let payload;
-
   try {
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(
+      token,
+      NODE_ENV === "production" ? JWT_SECRET : "super-secret",
+    );
   } catch (err) {
-    if (err.name === "JsonWebTokenError") {
-      return res.status(401).send({ message: "Invalid token" });
-    }
-    if (err.name === "TokenExpiredError") {
-      return res.status(401).send({ message: "Token expired" });
-    }
-    return res.status(FORBIDDEN_ERROR.error).send({ message: "Bad request" });
+    throw new UnauthorizedError("Unauthorized");
   }
-
   req.user = payload;
-
   next();
-
-  return null;
 };
-

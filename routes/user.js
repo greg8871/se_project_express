@@ -3,16 +3,17 @@ const { updateUser } = require("../controllers/users");
 const auth = require("../middlewares/auth");
 const {
     getCurrentUser,
-    getUsers,
-    getUser,
+    
+  
   } = require("../controllers/users");
+  const { validateUserUpdate } = require("../middlewares/validation");
 
+  
   router.get("/me", auth, getCurrentUser);
 
-  router.patch("/me", auth, updateUser);
+  router.patch("/me", auth, validateUserUpdate, updateUser);
   
-  router.get("/", auth, getUsers);
   
-  router.get("/:userId", auth, getUser);
+  
   
   module.exports = router;

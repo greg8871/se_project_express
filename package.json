@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/practicum-com/se_project_express/issues"
   },
-  "homepage": "https://github.com/practicum-com/se_project_express#readme",
+  "homepage": "https://www.gcunningham.crabdance.com#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
